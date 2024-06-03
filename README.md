@@ -5,3 +5,6 @@ https://github.com/elisejiuqizhang/TS-AD-Datasets?tab=readme-ov-file
 
 ### Anomaly Detection Dataset Kaggle
 https://www.kaggle.com/datasets/hkayan/anomliot
+
+### Air Quality
+https://www.kaggle.com/datasets/amandeepvasistha/air-quality-data
