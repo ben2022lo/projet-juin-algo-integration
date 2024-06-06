@@ -2,7 +2,7 @@ import pandas as pd
 import logging
 import json
 import requests
-
+from datetime import datetime
 
 class GetData:
     def __init__(self):
@@ -34,5 +34,14 @@ if __name__ == "__main__":
     data = get.get_data_api()
 
     df = pd.DataFrame(data)
-    csv_file = f"api_measure_{get.c_id}_{get.tm_id}_{get.t0}_{get.t1}.csv"
+    df['horodate'] = pd.to_datetime(df['horodate'])
+    df = df.drop_duplicates(subset=['horodate'])
+    df = df.reset_index(drop=True)
+    df['horodate'] = df['horodate'].dt.strftime('%Y-%m-%dT%H:%M:%S')
+
+    t0 = datetime.strptime(get.t0, '%Y-%m-%d %H:%M:%S')
+    t1 = datetime.strptime(get.t1, '%Y-%m-%d %H:%M:%S')
+    t0_formatted = t0.strftime('%Y-%m-%d_%H-%M-%S')
+    t1_formatted = t1.strftime('%Y-%m-%d_%H-%M-%S')
+    csv_file = "api_measure_" + str(get.tm_id) + "_" + str(get.c_id) + "_" + t0_formatted + "_" + t1_formatted + ".csv"
     df.to_csv(csv_file, index=False)
